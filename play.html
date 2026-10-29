@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.emulatorjs.org blob: 'wasm-unsafe-eval' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://cdn.emulatorjs.org; img-src 'self' data: blob: https://cdn.emulatorjs.org; font-src 'self' data: https://cdn.emulatorjs.org; connect-src 'self' blob: data: https://cdn.emulatorjs.org; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Playing — RetroBuddy</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://cdn.emulatorjs.org" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/play.css">
+  <script type="module" src="assets/js/play.js"></script>
+</head>
+<body class="play-page">
+  <header class="play-bar">
+    <a class="icon-btn" href="./" id="back-btn" aria-label="Back to library">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div class="play-title">
+      <span class="badge" id="play-badge" hidden></span>
+      <h1 id="play-title">Loading…</h1>
+    </div>
+    <div class="play-actions">
+      <button class="icon-btn" type="button" id="help-btn" aria-label="Controls help">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M7 10v4M5 12h4M15.5 11h.01M18 13h.01"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div id="game-wrap">
+      <div id="game"></div>
+    </div>
+    <div class="stage-message" id="stage-message" hidden>
+      <div>
+        <h2 id="stage-message-title">Something went wrong</h2>
+        <p id="stage-message-text"></p>
+        <a class="btn btn-primary" href="./">Back to library</a>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <div class="dialog-inner">
+      <div class="dialog-head">
+        <h2 id="help-title">Controls</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close"></button>
+      </div>
+      <p id="help-game-notes"></p>
+      <div class="keys">
+        <div><span>D-pad</span><span><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></span></div>
+        <div><span>A / B</span><span><kbd>Z</kbd> <kbd>X</kbd></span></div>
+        <div><span>X / Y</span><span><kbd>A</kbd> <kbd>S</kbd></span></div>
+        <div><span>L / R</span><span><kbd>Q</kbd> <kbd>E</kbd></span></div>
+        <div><span>Start</span><span><kbd>Enter</kbd></span></div>
+        <div><span>Select</span><span><kbd>V</kbd></span></div>
+      </div>
+      <p>On touch screens the virtual gamepad appears automatically. Gamepads work as soon as you press a button. Use the emulator toolbar (move the mouse or tap the screen) for save states, fullscreen, volume and control remapping.</p>
+      <div class="dialog-actions"><button class="btn btn-primary" type="button" data-close>Resume</button></div>
+    </div>
+  </dialog>
+</body>
+</html>

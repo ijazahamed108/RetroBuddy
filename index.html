@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>RetroBuddy — Play free retro games in your browser</title>
+  <meta name="description" content="Play legal, open-source homebrew games for NES, Game Boy, Game Boy Color and Game Boy Advance right in your browser — or load your own ROMs. Works on phones, tablets and laptops.">
+  <meta name="theme-color" content="#0d0b1e">
+  <meta property="og:title" content="RetroBuddy — Retro games in your browser">
+  <meta property="og:description" content="Free, legal homebrew games for classic consoles. Bring your own ROMs. Plays on any device.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/icons/icon-512.png">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icons/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/PressStart2P-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script type="module" src="assets/js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#library">Skip to games</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="./" aria-label="RetroBuddy home">
+        <img src="assets/icons/favicon.svg" alt="" width="32" height="32">
+        <span>Retro<em>Buddy</em></span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#library" class="hide-sm">Library</a>
+        <a href="#my-roms" class="hide-sm">My ROMs</a>
+        <button type="button" data-open="help-dialog">Help</button>
+        <button type="button" id="install-btn" hidden>Install</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Press <span class="hl">START</span><br>to play.</h1>
+          <p>Free, legal homebrew games for classic Nintendo consoles — playable instantly in your browser on phones, tablets and laptops. Got your own ROM backups? Load them too; they never leave your device.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#library">Browse games</a>
+            <button class="btn" type="button" data-action="pick-rom">Load your own ROM</button>
+          </div>
+          <ul class="hero-badges" aria-label="Highlights">
+            <li>No install</li>
+            <li>Touch controls</li>
+            <li>Gamepad &amp; keyboard</li>
+            <li>Save states</li>
+            <li>Works offline</li>
+          </ul>
+        </div>
+
+        <div class="dropzone" id="dropzone">
+          <img class="cart" src="assets/icons/cartridge.svg" alt="" width="64" height="64">
+          <h2>Drop a ROM here</h2>
+          <p>NES, SNES, Game Boy, GBA, N64, Genesis, Master System, PlayStation and more.</p>
+          <button class="btn btn-primary" type="button" data-action="pick-rom">Choose file</button>
+          <input type="file" id="rom-input" class="sr-only" multiple tabindex="-1" aria-hidden="true">
+          <small>Files are stored only in this browser. Only load games you legally own.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="recents-section" hidden aria-labelledby="recents-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="recents-title">Continue playing</h2>
+        </div>
+        <div class="row-scroll" id="recents"></div>
+      </div>
+    </section>
+
+    <section class="section" id="library" aria-labelledby="library-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="library-title">Game library</h2>
+            <p>Open-source and freely redistributable homebrew. Tap a game to play.</p>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search">
+            <span class="sr-only">Search games</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" id="search" placeholder="Search by title, genre or developer" autocomplete="off" enterkeyhint="search">
+          </label>
+          <div class="chips" id="filters" role="group" aria-label="Filter by system"></div>
+        </div>
+
+        <div class="grid" id="grid" aria-live="polite" aria-busy="true"></div>
+        <p class="empty" id="grid-empty" hidden>No games match your search.</p>
+      </div>
+    </section>
+
+    <section class="section" id="my-roms" aria-labelledby="my-roms-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="my-roms-title">My ROMs</h2>
+            <p>ROMs you add are kept privately in this browser’s storage.</p>
+          </div>
+          <button class="btn" type="button" data-action="pick-rom">Add ROM</button>
+        </div>
+        <ul class="rom-list" id="rom-list"></ul>
+        <p class="empty" id="rom-empty">No custom ROMs yet. Drop a file above or tap “Add ROM”.</p>
+        <p class="storage-info" id="storage-info"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>RetroBuddy</strong> is a free, open-source web player powered by <a href="https://emulatorjs.org" rel="noopener" target="_blank">EmulatorJS</a> and <a href="https://www.libretro.com" rel="noopener" target="_blank">libretro</a> cores.</p>
+      <p>Bundled games are homebrew titles distributed under their authors’ open licenses — see each game’s info panel for credits and source code. RetroBuddy does not host or link to commercial ROMs. Only load ROMs you have the legal right to use.</p>
+      <p>Nintendo, Game Boy, Sega and other trademarks belong to their respective owners. RetroBuddy is not affiliated with them.</p>
+    </div>
+  </footer>
+
+  <dialog id="game-dialog" aria-labelledby="game-dialog-title">
+    <div class="dialog-inner" id="game-dialog-body"></div>
+  </dialog>
+
+  <dialog id="system-dialog" aria-labelledby="system-dialog-title">
+    <div class="dialog-inner">
+      <div class="dialog-head">
+        <h2 id="system-dialog-title">Which system?</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close"></button>
+      </div>
+      <p id="system-dialog-text"></p>
+      <div class="system-options" id="system-options"></div>
+    </div>
+  </dialog>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <div class="dialog-inner">
+      <div class="dialog-head">
+        <h2 id="help-title">How to play</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close"></button>
+      </div>
+      <p><strong>Phones &amp; tablets:</strong> an on-screen gamepad appears automatically. Rotate to landscape for a bigger screen and use the fullscreen button.</p>
+      <p><strong>Keyboard (default):</strong></p>
+      <div class="keys">
+        <div><span>D-pad</span><span><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd></span></div>
+        <div><span>A / B</span><span><kbd>Z</kbd> <kbd>X</kbd></span></div>
+        <div><span>X / Y</span><span><kbd>A</kbd> <kbd>S</kbd></span></div>
+        <div><span>L / R</span><span><kbd>Q</kbd> <kbd>E</kbd></span></div>
+        <div><span>Start</span><span><kbd>Enter</kbd></span></div>
+        <div><span>Select</span><span><kbd>V</kbd></span></div>
+      </div>
+      <p><strong>Gamepads:</strong> plug in or pair any standard controller (Xbox, PlayStation, Switch Pro, 8BitDo…) and press a button.</p>
+      <p><strong>Saving:</strong> use the emulator menu to create save states. In-game saves are kept automatically in your browser.</p>
+      <p><strong>Remap controls:</strong> open the gamepad icon in the emulator toolbar.</p>
+      <div class="dialog-actions"><button class="btn btn-primary" type="button" data-close>Got it</button></div>
+    </div>
+  </dialog>
+</body>
+</html>

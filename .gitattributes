@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.nes binary
+*.gb binary
+*.gbc binary
+*.gba binary
+*.png binary
+*.ttf binary
